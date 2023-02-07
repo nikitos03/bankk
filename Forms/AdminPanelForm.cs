@@ -29,7 +29,7 @@ namespace Banking.UI
         /// </summary>
         private void CreateColumn()
         {
-            RoleList.Columns.Add("id_user", "ID");
+            RoleList.Columns.Add("id_user", "id");
             RoleList.Columns.Add("Login", "Логин");
             RoleList.Columns.Add("Password", "Пароль");
             var checkColumn = new DataGridViewCheckBoxColumn();
@@ -85,12 +85,14 @@ namespace Banking.UI
                 var id = RoleList.Rows[index].Cells[0].Value.ToString();
                 var isadmin = RoleList.Rows[index].Cells[3].Value.ToString();
 
-                var changeQuery = $"update register set is_admin = '{isadmin}' where id_user = '{id}'";
+                using (SqlCommand command = new SqlCommand($"update register set is_admin = @is_admin where id_user = @id_user", dataBase.getConnection()))
+                {
+                    command.Parameters.AddWithValue("@id_user", id);
+                    command.Parameters.AddWithValue("@is_admin", isadmin);
 
-                var command = new SqlCommand(changeQuery, dataBase.getConnection());
-                command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+                }          
             }
-
             dataBase.closeConnection();
 
             RefreshDataGrid();
@@ -107,11 +109,13 @@ namespace Banking.UI
             var selectRowIndex = RoleList.CurrentCell.RowIndex;
 
             var id = Convert.ToInt32(RoleList.Rows[selectRowIndex].Cells[0].Value);
-            var deleteQuery = $"delete from register where id_user = {id}";
 
-            var command = new SqlCommand(deleteQuery, dataBase.getConnection());
-            command.ExecuteNonQuery();
+            using (SqlCommand command = new SqlCommand($"delete from register where id_user = @id_user", dataBase.getConnection()))
+            {
+                command.Parameters.AddWithValue("@id_user", id);
 
+                command.ExecuteNonQuery();         
+            }
             dataBase.closeConnection();
 
             RefreshDataGrid();
