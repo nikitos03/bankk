@@ -92,3 +92,4 @@ C:\Users\Asus\Desktop\практика\Banking.UI\bin\Debug\sv\FluentValidation.
 C:\Users\Asus\Desktop\практика\Banking.UI\bin\Debug\tr\FluentValidation.resources.dll
 C:\Users\Asus\Desktop\практика\Banking.UI\bin\Debug\zh-CN\FluentValidation.resources.dll
 C:\Users\Asus\Desktop\практика\Banking.UI\obj\Debug\Banking.UI.csproj.CopyComplete
+C:\Users\Asus\Desktop\практика\Banking.UI\obj\Debug\Banking.UI.csproj.AssemblyReference.cache

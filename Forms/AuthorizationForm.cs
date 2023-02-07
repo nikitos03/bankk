@@ -26,20 +26,20 @@ namespace Banking.UI
             SqlDataAdapter adapter = new SqlDataAdapter();
             DataTable table = new DataTable();
 
-            using (SqlCommand command = new SqlCommand($"select login_user, password_user, is_admin from register where '{loginUser}' = @login_user AND '{passwordUser}' = @password_user", dataBase.getConnection()))
-            {
+           using (SqlCommand command = new SqlCommand($"select login_user, password_user, is_admin " +
+            "from register where login_user = @login_user AND password_user = @password_user", dataBase.getConnection()))
+           {
                 command.Parameters.AddWithValue("@login_user", loginUser);
                 command.Parameters.AddWithValue("@password_user", passwordUser);
                 
                 adapter.SelectCommand = command;
                 adapter.Fill(table);
-            }
-
+           }
 
             if (table.Rows.Count == 1) 
             {
                 var user = new checkUser(table.Rows[0].ItemArray[1].ToString(), Convert.ToBoolean(table.Rows[0].ItemArray[2]));
-
+                
                 MessageBox.Show("Вы успешно вошли!", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 MenuForm menuform = new MenuForm(user);
                 this.Hide();
